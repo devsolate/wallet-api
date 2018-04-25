@@ -1,10 +1,8 @@
 'use strict'
 
 const express = require('express')
-const controller = require('./wallet.controller')
 const router = express.Router()
 
-router.route('/create')
-    .post(controller.create);
+router.use('/wallet', require('./wallet/wallet.route'))
 
 module.exports = router
