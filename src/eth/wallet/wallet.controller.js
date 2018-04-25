@@ -14,10 +14,51 @@ const create = (req, res) => {
     res.json({
         status: 200,
         address: account.address,
-        encrypted
+        account
     })
 }
 
+const balance = async (req, res) => {
+    const { address } = req.params
+    
+    try {
+        const balance = await web3.eth.getBalance(address)
+        res.json({
+            status: 200,
+            balance: parseFloat(balance)
+        })
+    } catch(error) {
+        res.json({
+            status: 400
+        })
+    }
+}
+
+const sent = async (req, res) => {
+    const { from, to, amount, password } = req.body
+
+    try {
+        // Unlocked
+        const response = await web3.eth.personal.unlockAccount(from, password, 600)
+        const sent = await web3.eth.sendTransaction({
+            from: from,
+            to: to,
+            value: amount
+        })
+
+        res.json({
+            status: 200
+        })
+    } catch(error) {
+        console.log(error)
+        res.json({
+            status: 400
+        })
+    }
+}
+
 module.exports = {
-    create
+    create,
+    balance,
+    sent
 }
