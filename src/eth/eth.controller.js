@@ -1,7 +1,7 @@
 'use strict'
 
 const Web3 = require('web3')
-const Constants = require('../../constants')
+const Constants = require('../constants')
 const web3 = new Web3(Constants.WEB3);
 
 // Create Wallet and Return Private Key to Save to Client Side
@@ -50,7 +50,6 @@ const sent = async (req, res) => {
             status: 200
         })
     } catch(error) {
-        console.log(error)
         res.json({
             status: 400
         })
